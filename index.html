@@ -1,0 +1,37 @@
+<form id="scoutForm">
+    <label for="team">Team Number:</label>
+    <input type="text" id="team" name="team"><br>
+  
+    <label for="autoPoints">Autonomous Points:</label>
+    <input type="number" id="autoPoints" name="autoPoints"><br>
+  
+    <label for="teleopPoints">Teleop Points:</label>
+    <input type="number" id="teleopPoints" name="teleopPoints"><br>
+  
+    <input type="submit" value="Submit">
+  </form>
+  
+  <script>
+    document.getElementById('scoutForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      
+      const formData = new FormData(this);
+      const data = {
+        team: formData.get('team'),
+        autoPoints: formData.get('autoPoints'),
+        teleopPoints: formData.get('teleopPoints')
+      };
+  
+      const response = await fetch('https://script.google.com/macros/s/AKfycbwwUDMbqokhEV1tP5epn6EXLp5GpG23NC6KyB33b_7hPssv_O-cRQHXlFL_sigmN5FZ8w/exec', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      
+      const result = await response.json();
+      console.log(result); // For debugging
+    });
+  </script>
+  
